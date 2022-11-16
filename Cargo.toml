@@ -1,0 +1,16 @@
+[package]
+name = "visibilis"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+async-recursion = "1.0.0"
+async-trait = "0.1.56"
+postgres = {version = "0.19.1", features = ["with-chrono-0_4"] }
+serde = { version = "1.0.137", features = ["derive"] }
+strsim = "0.10.0"
+tokio = { version = "1.19.2", features = ["full"] }
+tokio-postgres = "0.7.6"
+nexum = {path = "../nexum"}
