@@ -1,11 +1,16 @@
-/*The postgres module of bi provides traits that make it easy to query
-a Postgres database for a given struct */
-//use async_trait::async_trait;
+//! The postgres module provides traits that make it easy to query a Postgres database for a given struct.
+//! These traits make it more ergonomic to construct user interfaces that contain search and autocomplete functionality
+//! For multiple classes of objects.
+
+
+// standard library
 use std::{vec::Vec, marker::Sync};
+// crates.io
 use async_trait::async_trait;
 use serde::Serialize;
-use nexum::{core::GenericError, postgres::{self as rpg, Client as PGClient, MissingRowError}};
 use tokio_postgres::{row::Row, types::{ToSql}};
+use nexum::{core::GenericError, postgres::{self as rpg, Client as PGClient, MissingRowError}};
+
 
 
 /// The fulltext trait makes it easy to perform fulltext searches using Postgres
@@ -17,6 +22,7 @@ pub trait FullText {
 pub async fn exec_fulltext<T: FullText>(client: &PGClient, phrase: &str) -> Result<Vec<T>, GenericError> {
     let query = T::query_fulltext();
     let ts_expr = rpg::ts_expression(phrase);
+    println!("visibilis/postgres/exec_fulltext with phrase='{}', ts_expr='{}'", &phrase, &ts_expr);
     let mut hits = Vec::new();
     let rows = client.query(query,&[&ts_expr]).await?;
     for row in rows {
