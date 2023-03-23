@@ -9,7 +9,7 @@ use std::{vec::Vec, marker::Sync};
 use async_trait::async_trait;
 use serde::Serialize;
 use tokio_postgres::{row::Row, types::{ToSql}};
-use nexum::{core::GenericError, postgres::{self as rpg, Client as PGClient, MissingRowError}};
+use pachydurable::{err::{GenericError, MissingRowError}, connect::{self as rpg, ClientNoTLS as PGClient}};
 
 
 
